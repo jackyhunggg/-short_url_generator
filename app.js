@@ -2,11 +2,13 @@ if (process.env.NODE_ENV !== 'production') {
     require('dotenv').config()
   }
 const express = require('express')
-const app = express()
-const port = 3000
 const exphbs = require('express-handlebars')
 const mongoose = require('mongoose')
 mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true })
+const app = express()
+const port = 3000
+const ShortUrl = require('./models/ShortUrl')
+
 // 取得資料庫連線狀態
 const db = mongoose.connection
 // 連線異常
@@ -21,9 +23,17 @@ db.once('open', () => {
 app.use(express.static('public'))
 app.engine('handlebars', exphbs({ defaultLayout: 'main' }))
 app.set('view engine', 'handlebars')
+app.use(express.urlencoded({ extended: false }))
 
 app.get('/', (req, res) => {
     res.render('index')
+})
+
+app.post('/shortUrls', async (req, res) => {
+    const fullUrl = req.body.fullUrl
+    ShortUrl.create({ fullUrl })
+        .then(() => res.redirect('/'))
+        .catch(error => console.log(error))
 })
 
 app.listen(port, () => {
