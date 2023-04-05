@@ -22,7 +22,7 @@
     "express-handlebars": "^3.0.0",
     "mongoose": "^5.9.7",
     "nodemon": "^2.0.22",
-    "shortid": "^2.2.16"
+    "short-unique-id": "^4.4.4"
   },
   "devDependencies": {
     "dotenv": "^16.0.3"
