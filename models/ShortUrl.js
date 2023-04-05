@@ -1,5 +1,5 @@
 const mongoose = require('mongoose')
-const uuid = new ShortUniqueId({ length: 5 })
+const shortid = require('shortid')
 const Schema = mongoose.Schema
 const urlsSchema = new Schema({
   fullUrl: {
@@ -9,7 +9,7 @@ const urlsSchema = new Schema({
   shortUrl: {
     type: String,
     required: true,
-    default: uuid
+    default: shortid.generate(5)
   }
 })
 module.exports = mongoose.model('ShortUrl', urlsSchema)
