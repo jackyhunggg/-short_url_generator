@@ -1,16 +1,31 @@
 <body>
-    <h1>URL Shortener</h1>
-    <div class="container">
+    
+    <div class="container d-flex flex-column align-items-center">
+        <h1>URL Shortener</h1>
+
         <div>
             <img src="https://assets-lighthouse.alphacamp.co/uploads/image/file/16716/ExportedContentImage_00.png" alt="link">
         </div>
-
+{{#if success}}
         <div>
-            <input type="url" class="form-control" id="url" placeholder="Input URL here" name="url" value="">
+            <p class="font-weight-bold disabled" style="font-weight: 700; font-size: x-large">Success! Please use this link</p>
         </div>
 
-        <div>
-            <button type="button" class="btn btn-outline-primary btn-lg">Shorten</button>
+        <div class="mb-3">
+            <form action="/shortUrls" method="POST" class="d-flex flex-column align-items-center">
+                <label for="shortUrl"></label>
+                <input required type="url" id="shortUrl" class="form-control mb-3 col" placeholder="{{this.shortUrl}}" name="shortUrl">
+                <button type="submit" class="btn btn-outline-primary btn-lg">Shorten</button>
+            </form>
+        </div>
+{{/if}}
+
+        <div class="mb-3">
+            <form action="/shortUrls" method="POST" class="d-flex flex-column align-items-center">
+                <label for="fullUrl"></label>
+                <input required type="url" id="fullUrl" class="form-control mb-3 col" placeholder="Input URL here" name="fullUrl">
+                <button type="submit" class="btn btn-outline-primary btn-lg">Shorten</button>
+            </form>
         </div>
     </div>
 </body>
