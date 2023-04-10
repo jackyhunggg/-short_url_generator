@@ -8,6 +8,7 @@ mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true, useUnifiedTop
 const app = express()
 const port = 3000
 const ShortUrl = require('./models/ShortUrl')
+const shortId = require('shortid')
 
 // 取得資料庫連線狀態
 const db = mongoose.connection
@@ -31,9 +32,16 @@ app.get('/', (req, res) => {
 
 app.post('/shortUrls', async (req, res) => {
     const fullUrl = req.body.fullUrl
-    ShortUrl.create({ fullUrl })
-        .then(() => res.redirect('/'))
-        .catch(error => console.log(error))
+    const id = shortId.generate()
+    ShortUrl.findOne({ fullUrl })
+      .then((data) => {
+        if(data) {
+          ShortUrl.create({ id, fullUrl })
+        }
+      })
+      .then(data => 
+        res.render('index', {fullUrl, shortURL: data.shortURL}))
+      .catch(err => console.log(err))
 })
 
 app.listen(port, () => {

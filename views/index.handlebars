@@ -1,12 +1,5 @@
-<body>
-    
-    <div class="container d-flex flex-column align-items-center">
-        <h1>URL Shortener</h1>
-
-        <div>
-            <img src="https://assets-lighthouse.alphacamp.co/uploads/image/file/16716/ExportedContentImage_00.png" alt="link">
-        </div>
-{{#if success}}
+ <div class="container d-flex flex-column align-items-center">
+{{#if shortURL}}
         <div>
             <p class="font-weight-bold disabled" style="font-weight: 700; font-size: x-large">Success! Please use this link</p>
         </div>
@@ -18,8 +11,7 @@
                 <button type="submit" class="btn btn-outline-primary btn-lg">Shorten</button>
             </form>
         </div>
-{{/if}}
-
+{{else}}
         <div class="mb-3">
             <form action="/shortUrls" method="POST" class="d-flex flex-column align-items-center">
                 <label for="fullUrl"></label>
@@ -28,4 +20,4 @@
             </form>
         </div>
     </div>
-</body>
+{{/if}}
