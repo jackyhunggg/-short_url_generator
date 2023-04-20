@@ -37,24 +37,33 @@ app.post('/', (req, res) => {
   URL.findOne({ originalURL: req.body.url })
     .then(data => {
       if (data) {
-        res.render('index', {
-          origin: req.headers.origin,
-          shortURL: data.shortURL
-        })
+        res.render('index', { origin: req.headers.origin, shortURL: data.shortURL })
       } else {
   // If no, creates a new 'URL' document with the generated 'shortId' and the submitted 'originalURL' 
   // and saves it to the database
         const newURL = new URL({ originalURL: req.body.url, shortURL: id })
         return newURL.save()
           .then(data => {
-            res.render('index', {
-              origin: req.headers.origin,
-              shortURL: data.shortURL
-            })
+            res.render('index', { origin: req.headers.origin,shortURL: data.shortURL })
           })
       }
     })
     .catch(err => console.log(err))
+})
+
+app.get('/:shortURL', (req,res) => {
+  const shortURL = req.params.shortURL
+  // look if the params already exist in the database
+  URL.findOne({ shortURL })
+    .then(data => {
+      // if yes, redirect to 'originalURL'
+      if (data) {
+        res.redirect(data.originalURL)
+      } else {
+      // if not, send error message
+      res.render('error')
+      }
+    })
 })
 
 

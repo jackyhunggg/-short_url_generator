@@ -2,8 +2,17 @@
 {{#if shortURL}}
         <div class="result">
             <h2 class="font-weight-bold disabled" style="font-weight: 700; font-size: x-large">Success! Please use this link</h2>
-            <p id="generatedURL">{{origin}}/{{shortURL}}</p>
+            <p id="shortenedURL">{{origin}}/{{shortURL}}</p>
+            <button onclick="copy()" class="copy btn btn-primary">Copy</button>
         </div>
+        <script>
+        function copy() {
+            const URL = document.getElementById('shortenedURL').innerText
+            navigator.clipboard.writeText(URL)
+                .then(() => alert('I got you bro!'))
+                .catch(err => console.log(err))
+        }
+        </script>
 {{else}}
         <div class="mb-3">
             <form action="/" method="POST" class="d-flex flex-column align-items-center">
