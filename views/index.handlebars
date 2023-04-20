@@ -1,14 +1,13 @@
  <div class="container d-flex flex-column align-items-center">
 {{#if shortURL}}
-        <div>
+        <div class="result">
             <h2 class="font-weight-bold disabled" style="font-weight: 700; font-size: x-large">Success! Please use this link</h2>
-            <p>myshorturl/{{shortURL}}</p>
+            <p id="generatedURL">{{origin}}/{{shortURL}}</p>
         </div>
 {{else}}
         <div class="mb-3">
             <form action="/" method="POST" class="d-flex flex-column align-items-center">
-                <label for="fullUrl"></label>
-                <input required type="url" id="fullUrl" class="form-control mb-3 col" placeholder="Input URL here" name="fullUrl">
+                <input required type="url" name="url" class="form-control mb-3 col" placeholder="Input URL here">
                 <button type="submit" class="btn btn-outline-primary btn-lg">Shorten</button>
             </form>
         </div>
