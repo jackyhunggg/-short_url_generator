@@ -30,17 +30,13 @@ app.get('/', (req, res) => {
     res.render('index')
 })
 
-app.post('/shortUrls', async (req, res) => {
-    const fullUrl = req.body.fullUrl
+app.post('/', (req, res) => {
     const id = shortId.generate()
-    ShortUrl.findOne({ fullUrl })
-      .then((data) => {
-        if(data) {
-          ShortUrl.create({ id, fullUrl })
-        }
-      })
+    ShortUrl.findOne({fullUrl: req.body.fullUrl})
+      .then(data =>
+          data ? data : ShortUrl.create({ id, fullUrl: req.body.fullUrl }))
       .then(data => 
-        res.render('index', {fullUrl, shortURL: data.shortURL}))
+        res.render('index', { shortURL: data.shortURL }))
       .catch(err => console.log(err))
 })
 
