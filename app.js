@@ -8,7 +8,19 @@ mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true, useUnifiedTop
 const app = express()
 const port = 3000
 const URL = require('./models/URL')
-const shortId = require('shortid')
+
+// url shortener function
+function shortener(length) {
+  let result = '';
+  const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+  const charactersLength = characters.length;
+  let count = 0;
+  while (count < length) {
+    result += characters.charAt(Math.floor(Math.random() * charactersLength));
+    count += 1;
+  }
+  return result;
+}
 
 // 取得資料庫連線狀態
 const db = mongoose.connection
@@ -31,7 +43,7 @@ app.get('/', (req, res) => {
 })
 
 app.post('/', (req, res) => {
-  const id = shortId.generate()
+  const id = shortener(5)
   // checks if a record with the given 'originalURL' already exists in the database
   // if so, returns the existing record with its 'shortURL'
   URL.findOne({ originalURL: req.body.url })
